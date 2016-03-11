@@ -13,7 +13,7 @@ class TutorialItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
-class DmozItem(Scrapy.Item):
-	tile = Scrapy.Field()
-	link = Scrapy.Field()
-	desc = Scrapy.Field()
+class DmozItem(scrapy.Item):
+	tile = scrapy.Field()
+	link = scrapy.Field()
+	desc = scrapy.Field()
