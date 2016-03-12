@@ -14,6 +14,6 @@ class TutorialItem(scrapy.Item):
     pass
 
 class DmozItem(scrapy.Item):
-	tile = scrapy.Field()
+	title = scrapy.Field()
 	link = scrapy.Field()
 	desc = scrapy.Field()

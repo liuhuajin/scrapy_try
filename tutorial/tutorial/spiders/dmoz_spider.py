@@ -1,4 +1,13 @@
 from scrapy.spider import Spider
+from scrapy.selector import Selector
+from tutorial.items import DmozItem  
+
+import logging
+logger = logging.getLogger('scrapy_log')
+logger.setLevel(logging.DEBUG)
+log_file = logging.FileHandler('../../scrapy_log.log')
+log_file.setLevel(logging.DEBUG)
+logger.addHandler(log_file)
 
 class DomzSpider(Spider):
 	name = 'dmoz'
@@ -7,5 +16,14 @@ class DomzSpider(Spider):
 	"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"]
 
 	def parse(self, response):
-		filename = response.url.split("/")[-2]  
-		open(filename, 'wb').write(response.body)
+		sel = Selector(response)
+		sites = sel.xpath('//ul/li')
+		items = []
+		for site in sites:
+			item = DmozItem()  
+			item['title'] = site.xpath('a/text()').extract()  
+			item['link'] = site.xpath('a/@href').extract()  
+			item['desc'] = site.xpath('text()').extract()  
+			items.append(item)  
+		return items 
+			 
